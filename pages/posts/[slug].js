@@ -1,4 +1,6 @@
-const PostDetailsPage = () =>{
+import PostContent from "@/components/posts/post-detail/PostContent";
 
-}
-export default PostDetailsPage
+const PostDetailsPage = () => {
+  return <PostContent />;
+};
+export default PostDetailsPage;
