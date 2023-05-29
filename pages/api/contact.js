@@ -21,38 +21,30 @@ const handler = async (req, res) => {
 		try {
 			const client = await MongoClient.connect(process.env.DB_URL);
 			const messagesCollection = client.db().collection("messages");
-		} catch (err) {
-			return res.status(500).json({
-				status: fasle,
-				message: "Could Not Connect To Database",
-			});
-		}
-
-		try {
 			const new_message = await messagesCollection.insertOne({
 				email,
 				name,
 				message,
 			});
-		} catch (err) {
 			client.close();
+
+			return res.status(201).json({
+				status: true,
+				message: "Message Successfully stored",
+				data: {
+					id: new_message.insertedId,
+					email,
+					name,
+					message,
+				},
+			});
+		} catch (err) {
+			console.log(err);
 			return res.status(500).json({
-				status: fasle,
+				status: false,
 				message: "Could Not Create the Entry In Database",
 			});
 		}
-		client.close();
-
-		return res.status(201).json({
-			status: true,
-			message: "Message Successfully stored",
-			data: {
-				id: new_message.insertedId,
-				email,
-				name,
-				message,
-			},
-		});
 	}
 };
 
