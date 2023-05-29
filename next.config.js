@@ -1,3 +1,9 @@
+let env = {};
+try {
+	env = require("./env");
+} catch (err) {
+	console.log(err);
+}
 module.exports = {
 	webpack(config) {
 		config.resolve.fallback = {
@@ -8,5 +14,9 @@ module.exports = {
 		};
 
 		return config;
+	},
+	reactStrictMode: true,
+	env: {
+		...env,
 	},
 };
