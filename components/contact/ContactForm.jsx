@@ -12,8 +12,9 @@ const ContactForm = () => {
 	const messageRef = useRef();
 
 	useEffect(() => {
+		let timer;
 		if (reqStatus === "success" || reqStatus === "error") {
-			const timer = setTimeout(() => {
+			timer = setTimeout(() => {
 				setReqStatus();
 				setError();
 			}, 3000);
