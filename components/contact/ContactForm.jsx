@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Notification from "../ui/notification";
 
@@ -10,6 +10,19 @@ const ContactForm = () => {
 	const emailRef = useRef();
 	const nameRef = useRef();
 	const messageRef = useRef();
+
+	useEffect(() => {
+		if (reqStatus === "success" || reqStatus === "error") {
+			const timer = setTimeout(() => {
+				setReqStatus();
+				setError();
+			}, 3000);
+		}
+
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [reqStatus]);
 
 	const sendMessageHandler = async (formData) => {
 		const res = await fetch("/api/contact", {
